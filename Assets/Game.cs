@@ -32,8 +32,8 @@ public class Game : MonoBehaviour
 	public Text levelText;
 	public SfxHolder[] soundEffects;
 	public Text statusLabel;
-	static readonly string apiKey = "ce81093e-98b3-4314-ae8c-0291557443a6";
-	static readonly string playerName = "voxelbot";
+	static readonly string apiKey = "4a855ed6-fd23-4354-9a3f-d883600c8f5e";
+	static readonly string playerName = "voxelbot4";
 
 	static Dictionary<HalloweenBot.Status, List<string>> statusTexts = new Dictionary<HalloweenBot.Status, List<string>> {
 		{ HalloweenBot.Status.LookingForLadder, new List<string>
@@ -347,18 +347,20 @@ public class Game : MonoBehaviour
 			go.transform.Find("Equipped").gameObject.SetActive(true);
 			go.transform.SetAsLastSibling();
 
-			switch(HalloweenBot.Classify(this)) {
-				case HalloweenBot.EquipmentTag.Breastplate:
-				case HalloweenBot.EquipmentTag.Helmet:
-				case HalloweenBot.EquipmentTag.Legplates:
-					game.PlaySoundEffect(Sfx.EquipArmor);
-					break;
-				case HalloweenBot.EquipmentTag.Weapon:
-					game.PlaySoundEffect(Sfx.EquipWeapon);
-					break;
-				case HalloweenBot.EquipmentTag.Potion:
-					game.PlaySoundEffect(Sfx.DrinkPotion);
-					break;
+			if (Time.frameCount > 60) {
+				switch(HalloweenBot.Classify(this)) {
+					case HalloweenBot.EquipmentTag.Breastplate:
+					case HalloweenBot.EquipmentTag.Helmet:
+					case HalloweenBot.EquipmentTag.Legplates:
+						game.PlaySoundEffect(Sfx.EquipArmor);
+						break;
+					case HalloweenBot.EquipmentTag.Weapon:
+						game.PlaySoundEffect(Sfx.EquipWeapon);
+						break;
+					case HalloweenBot.EquipmentTag.Potion:
+						game.PlaySoundEffect(Sfx.DrinkPotion);
+						break;
+				}
 			}
 		}
 
@@ -1197,7 +1199,7 @@ public class Game : MonoBehaviour
 			lastStatus = bot.status;
 			if (!recentStatus.Contains(bot.status)) {
 				var alts = statusTexts[bot.status];
-				statusLabel.text = alts[Random.Range(0, alts.Count - 1)];
+				statusLabel.text = alts[Random.Range(0, alts.Count)];
 				lastChangeStatus = Time.time;
 				recentStatus.Add(bot.status);
 			}
